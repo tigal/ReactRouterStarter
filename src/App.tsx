@@ -74,7 +74,9 @@ function RouteWithSubRoutes(route: any, extraProps = {}) {
 
 const fakeAuth = {
     isAuthenticated: false,
-    authenticate(cb: () => void) {
+    async authenticate(cb: (() => void)) {
+        let profile = await fetch("http://localhost:4000/profile");
+        console.log(profile);
         fakeAuth.isAuthenticated = true;
         setTimeout(cb, 100);
     },
