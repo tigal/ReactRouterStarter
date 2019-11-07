@@ -20,7 +20,7 @@ const routes = [
     },
     {
         path: "/protected",
-        render: ({location}: {location: any}) => {
+        render: ({location}: { location: any }) => {
             return fakeAuth.isAuthenticated ? (
                 <ProtectedPage/>
             ) : (
@@ -30,7 +30,7 @@ const routes = [
                         state: {from: location}
                     }}
                 />
-            )
+            );
         }
     }
 ];
@@ -75,7 +75,14 @@ function RouteWithSubRoutes(route: any, extraProps = {}) {
 const fakeAuth = {
     isAuthenticated: false,
     async authenticate(cb: (() => void)) {
-        let profile = await fetch("http://localhost:4000/profile");
+        let responsePromise: Promise<Response> = fetch("http://localhost:4000/profile");
+
+        let profile;
+        try {
+            profile = await responsePromise;
+        } catch (e) {
+            console.error(e);
+        }
         console.log(profile);
         fakeAuth.isAuthenticated = true;
         setTimeout(cb, 100);
@@ -126,9 +133,20 @@ function LoginPage() {
     };
 
     return (
-        <div>
-            <p>You must log in to view the page at {from.pathname}</p>
-            <button onClick={login}>Log in</button>
-        </div>
+        <form className="form-signin">
+            <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <label htmlFor="inputEmail" className="sr-only">Email address</label>
+            <input type="email" id="inputEmail" className="form-control" placeholder="Email address"
+                   required={true}/>
+            <label htmlFor="inputPassword" className="sr-only">Password</label>
+            <input type="password" id="inputPassword" className="form-control" placeholder="Password"
+                   required={true}/>
+            <div className="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"/> Remember me
+                </label>
+            </div>
+            <button onClick={login} className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
     );
 }
