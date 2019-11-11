@@ -2,6 +2,8 @@ import React from 'react';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import dataService from "./DataService";
 
+// мы используем react-router и хотим иметь доступ к параметрам пути
+// поэтому наследуемся от RouteComponentProps
 interface LoginPageProps extends RouteComponentProps {
 
 }
@@ -39,12 +41,16 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
 
     async login() {
+        // сохраняем всё это, чтобы после авторизации перейти на нужную страницу
         let history = this.props.history;
         let location = this.props.location;
         let {from} = location.state || {from: {pathname: "/"}};
+
+        // пытаемся авторизоваться
         await dataService.login(this.state.inputLogin, this.state.inputPassword);
 
         if (dataService.isUserAuthorized()) {
+            // авторизовались, переходим на страницу
             history.replace(from);
             return;
         } else {
@@ -59,8 +65,8 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
 
                 <input onChange={event => this.changeLogin(event.target.value)}
-                       type="email" id="inputEmail" className="form-control"
-                       placeholder="Email address"
+                       className="form-control"
+                       placeholder="Login"
                        required={true}/>
 
                 <label htmlFor="inputPassword" className="sr-only">Password</label>
@@ -77,7 +83,8 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                     </label>
                 </div>
                 <button onClick={() => this.login()}
-                        className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                        className="btn btn-lg btn-primary btn-block" type="submit">Sign in
+                </button>
             </form>
         )
     }

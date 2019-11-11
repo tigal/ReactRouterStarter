@@ -22,6 +22,7 @@ export class TodoItem {
 
 }
 
+// Класс для работы с сервером
 class DataService {
 
     private static DB_URL = "http://localhost:4000";
@@ -32,10 +33,18 @@ class DataService {
         this.currentUser = null;
     }
 
+    /**
+     * Авторизован ли пользователь?
+     */
     public isUserAuthorized() {
         return this.currentUser != null;
     }
 
+    /**
+     * Авторизация
+     * @param userLogin логин
+     * @param password пароль
+     */
     public async login(userLogin: string, password: string) {
         let userResponsePromise: Promise<Response> = fetch("http://localhost:4000/user");
 
@@ -63,6 +72,9 @@ class DataService {
         this.currentUser = null;
     }
 
+    /**
+     * Получить все TodoItem пользователя
+     */
     public async getTodoItems(): Promise<TodoItem[]> {
         if (this.currentUser == null) {
             return Promise.reject("User is not authorized");
@@ -77,6 +89,10 @@ class DataService {
         return await jsonPromise;
     }
 
+    /**
+     * Добавить новый TodoItem на сервер
+     * @param newItem новый TodoItem
+     */
     public async saveItem(newItem: TodoItem): Promise<TodoItem> {
         if (this.currentUser == null) {
             return Promise.reject("User is not authorized");
@@ -90,6 +106,11 @@ class DataService {
         return await (await postPromise).json();
     }
 
+    /**
+     * Удалить TodoItem
+     * @param id идентификатор item'a
+     * @returns true, если получилось удалить
+     */
     public async deleteItem(id: number): Promise<boolean> {
         if (this.currentUser == null) {
             return Promise.reject("User is not authorized");
