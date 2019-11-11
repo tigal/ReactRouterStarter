@@ -3,7 +3,7 @@
     {
       "id": 1,
       "text": "This is first todo (which is stored on server by default)",
-      "date": "2019-11-11T07:12:37.382Z",
+      "date": "1970-01-01T07:12:37.382Z",
       "author": "admin"
     }
   ],
