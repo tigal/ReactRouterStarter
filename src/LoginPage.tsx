@@ -60,32 +60,28 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
     render(): React.ReactNode {
         return (
-            <form className="form-signin">
-                <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-                <label htmlFor="inputEmail" className="sr-only">Email address</label>
+            <div className="form-holder">
+                <div className="form-signin">
+                    <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+                    <label htmlFor="inputEmail" className="sr-only">Email address</label>
 
-                <input onChange={event => this.changeLogin(event.target.value)}
-                       className="form-control"
-                       placeholder="Login"
-                       required={true}/>
+                    <input onChange={event => this.changeLogin(event.target.value)}
+                           className="form-control"
+                           placeholder="Login"
+                           required={true}/>
 
-                <label htmlFor="inputPassword" className="sr-only">Password</label>
+                    <label htmlFor="inputPassword" className="sr-only">Password</label>
 
-                <input onChange={event => {
-                    this.changePassword(event.target.value)
-                }} type="password" id="inputPassword" className="form-control"
-                       placeholder="Password"
-                       required={true}/>
-
-                <div className="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="remember-me"/> Remember me
-                    </label>
+                    <input onChange={event => {
+                        this.changePassword(event.target.value)
+                    }} type="password" id="inputPassword" className="form-control"
+                           placeholder="Password"
+                           required={true}/>
+                    <button onClick={() => this.login()}
+                            className="btn btn-lg btn-primary btn-block" type="button">Sign in
+                    </button>
                 </div>
-                <button onClick={() => this.login()}
-                        className="btn btn-lg btn-primary btn-block" type="submit">Sign in
-                </button>
-            </form>
+            </div>
         )
     }
 

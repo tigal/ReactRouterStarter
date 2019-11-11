@@ -18,9 +18,9 @@ export class Home extends React.Component<{}, HomeState> {
             items: []
         };
         dataService.getTodoItems().then(value => {
-           this.setState({
-               items: value
-           });
+            this.setState({
+                items: value
+            });
         });
     }
 
@@ -33,25 +33,34 @@ export class Home extends React.Component<{}, HomeState> {
 
         let todoItem = new TodoItem(-1, currentUser.login, title, new Date());
 
-        let savedItem = await dataService.saveItem(todoItem);
-        this.setState({
-            items: [...this.state.items, savedItem]
-        });
+        // здесь надо сохранять новый item
     }
 
     private async onItemRemove(id: number) {
-        let succeeded = await dataService.deleteItem(id);
-        if (succeeded) {
-            const undeletedItems: TodoItem [] = this.state.items.filter((item) => item.id !== id);
-            this.setState({
-                items: undeletedItems
-            });
-        }
+        // здесь надо удалять item
+    }
+
+    private logout() {
+        // здесь сделать разлогин
     }
 
     render(): ReactNode {
         return (
             <div className="App">
+
+                <nav className="navbar navbar-expand-lg sticky-top navbar-dark bd-navbar">
+                    <a className="navbar-brand" href="#">TaskIT</a>
+                    <div id="navbarNavDropdown" className="navbar-collapse collapse">
+                        <ul className="navbar-nav mr-auto">
+
+                        </ul>
+                        <ul className="navbar-nav">
+                            <li className="nav-item text-nowrap">
+                                <div className="btn btn-info" onClick={e => this.logout()}>Sign out</div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
 
                 <main className="py-md-3 pl-md-5">
 

@@ -46,7 +46,7 @@ class DataService {
      * @param password пароль
      */
     public async login(userLogin: string, password: string) {
-        let userResponsePromise: Promise<Response> = fetch("http://localhost:4000/user");
+        let userResponsePromise: Promise<Response> = fetch(`${DataService.DB_URL}/user`);
 
         let response: Response = await userResponsePromise;
 
@@ -73,7 +73,7 @@ class DataService {
     }
 
     /**
-     * Получить все TodoItem пользователя
+     * Получить все TodoItem'ы пользователя
      */
     public async getTodoItems(): Promise<TodoItem[]> {
         if (this.currentUser == null) {
