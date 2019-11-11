@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
-import {useHistory, useLocation} from "react-router-dom";
-import {fakeAuth} from "./App";
-import authService from "./AuthService";
+import React from 'react';
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import dataService from "./DataService";
 
-interface LoginPageProps {
+interface LoginPageProps extends RouteComponentProps {
 
 }
 
@@ -15,7 +14,7 @@ interface LoginPageState {
 
 }
 
-export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
+class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
 
     constructor(props: Readonly<LoginPageProps>) {
@@ -40,19 +39,20 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
 
     async login() {
+        let history = this.props.history;
+        let location = this.props.location;
+        let {from} = location.state || {from: {pathname: "/"}};
+        await dataService.login(this.state.inputLogin, this.state.inputPassword);
 
-        // let {from} = location.state || {from: {pathname: "/"}};
-        await authService.login(this.state.inputLogin, this.state.inputPassword);
-
-        if (authService.isUserAuthorized()) {
-            // history.replace(from);
-            alert("OK!");
+        if (dataService.isUserAuthorized()) {
+            history.replace(from);
+            return;
         } else {
             alert("Not OK!");
         }
     }
 
-    render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+    render(): React.ReactNode {
         return (
             <form className="form-signin">
                 <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -76,9 +76,12 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                         <input type="checkbox" value="remember-me"/> Remember me
                     </label>
                 </div>
-                <button onClick={() => this.login()} className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button onClick={() => this.login()}
+                        className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>
         )
     }
 
 };
+
+export default withRouter(LoginPage);

@@ -1,21 +1,10 @@
 {
-  "posts": [
+  "todo": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    },
-    {
-      "id": 2,
-      "body": "new comment",
-      "postId": 1
+      "text": "This is first todo (which is stored on server by default)",
+      "date": "2019-11-11T07:12:37.382Z",
+      "author": "admin"
     }
   ],
   "user": [
