@@ -2,6 +2,7 @@ import * as React from "react";
 import {ReactNode} from "react";
 import dataService, {TodoItem} from "./DataService";
 import {InputComponent} from "./InputComponent";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
 interface HomeState {
 
@@ -9,10 +10,12 @@ interface HomeState {
 
 }
 
-export class Home extends React.Component<{}, HomeState> {
+interface HomeProps extends RouteComponentProps {}
+
+export class Home extends React.Component<HomeProps, HomeState> {
 
 
-    constructor(props: Readonly<{}>) {
+    constructor(props: Readonly<HomeProps>) {
         super(props);
         this.state = {
             items: []
@@ -34,14 +37,26 @@ export class Home extends React.Component<{}, HomeState> {
         let todoItem = new TodoItem(-1, currentUser.login, title, new Date());
 
         // здесь надо сохранять новый item
+        try {
+        const {id} = await dataService.saveItem(todoItem);
+        todoItem.id = id;
+        this.setState({items:[...this.state.items, todoItem],});
+        } catch (e) { alert("Error!") }
     }
 
     private async onItemRemove(id: number) {
         // здесь надо удалять item
+        try {
+            await dataService.deleteItem(id);
+            this.setState({items: this.state.items.filter((item) => item.id !== id)});
+        } catch (e) { alert("Error!") }
     }
 
     private logout() {
-        // здесь сделать разлогин
+        try {
+            dataService.currentUser = null;
+            this.props.history.push('/login');
+        } catch (e) { alert("Error!") }
     }
 
     render(): ReactNode {
@@ -95,4 +110,4 @@ export class Home extends React.Component<{}, HomeState> {
     }
 }
 
-export default Home;
+export default withRouter(Home);

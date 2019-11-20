@@ -1,10 +1,28 @@
 {
   "todo": [
     {
-      "id": 1,
-      "text": "This is first todo (which is stored on server by default)",
-      "date": "1970-01-01T07:12:37.382Z",
-      "author": "admin"
+      "author": "user",
+      "text": "User1",
+      "date": "2019-11-20 11:08:38",
+      "id": 9
+    },
+    {
+      "author": "user",
+      "text": "User2",
+      "date": "2019-11-20 11:08:41",
+      "id": 10
+    },
+    {
+      "author": "admin",
+      "text": "Admin1",
+      "date": "2019-11-20 13:09:57",
+      "id": 11
+    },
+    {
+      "author": "admin",
+      "text": "Admin2",
+      "date": "2019-11-20 13:09:59",
+      "id": 12
     }
   ],
   "user": [
