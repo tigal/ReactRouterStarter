@@ -85,14 +85,17 @@ class CreateCake extends React.Component<CreateCakeProps, CreateCakeState> {
                 weight : 15
             });
         }
-        this.setState({
-            weight : parseInt(newValue)
-        });
+        else
+        {
+            this.setState({
+                weight : parseInt(newValue)
+            });
+        }
     }
 
     handleChangesTier(newValue: string) {
         if (parseInt(newValue)*3 > this.state.weight) {
-            if (this.state.weight/3 < 0) {
+            if (this.state.weight/3 < 1) {
                 this.setState({
                     tier : 1
                 });
@@ -167,6 +170,7 @@ class CreateCake extends React.Component<CreateCakeProps, CreateCakeState> {
                             <input className="form-control" aria-describedby="inputGroup-sizing-default"
                                    type="number" min="1" max="15"
                                    placeholder="1"
+                                   value={this.state.weight}
                                    id="mouse-only-number-input"
                                    onChange={event => this.handleChangesWeight(event.target.value)}/>
                         </div>
@@ -177,6 +181,7 @@ class CreateCake extends React.Component<CreateCakeProps, CreateCakeState> {
                             <input className="form-control" aria-describedby="inputGroup-sizing-default"
                                    type="number" min="1" max="5"
                                    placeholder="1"
+                                   value={this.state.tier}
                                    id="mouse-only-number-input"
                                    onChange={event => this.handleChangesTier(event.target.value)}/>
                         </div>
