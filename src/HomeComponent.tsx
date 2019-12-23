@@ -1,12 +1,11 @@
 import * as React from "react";
 import {ReactNode} from "react";
-import dataService, {TodoItem} from "./DataService";
-import {InputComponent} from "./InputComponent";
+import dataService, {CakeItem} from "./DataService";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
 interface HomeState {
 
-    items: TodoItem[];
+    items: CakeItem[];
 
 }
 
@@ -27,25 +26,7 @@ export class Home extends React.Component<HomeProps, HomeState> {
         });
     }
 
-    private async onNewTodoHandle(title: string) {
-        let currentUser = dataService.currentUser;
-
-        if (!dataService.isUserAuthorized() || currentUser == null) {
-            return;
-        }
-
-        let todoItem = new TodoItem(-1, currentUser.login, title, new Date());
-
-        // здесь надо сохранять новый item
-        try {
-        const {id} = await dataService.saveItem(todoItem);
-        todoItem.id = id;
-        this.setState({items:[...this.state.items, todoItem],});
-        } catch (e) { alert("Error!") }
-    }
-
     private async onItemRemove(id: number) {
-        // здесь надо удалять item
         try {
             await dataService.deleteItem(id);
             this.setState({items: this.state.items.filter((item) => item.id !== id)});
@@ -55,7 +36,13 @@ export class Home extends React.Component<HomeProps, HomeState> {
     private logout() {
         try {
             dataService.currentUser = null;
-            this.props.history.push('/login');
+            this.props.history.push('/logout');
+        } catch (e) { alert("Error!") }
+    }
+
+    private create_cake() {
+        try {
+            this.props.history.push('/createcake');
         } catch (e) { alert("Error!") }
     }
 
@@ -64,14 +51,19 @@ export class Home extends React.Component<HomeProps, HomeState> {
             <div className="App">
 
                 <nav className="navbar navbar-expand-lg sticky-top navbar-dark bd-navbar">
-                    <a className="navbar-brand" href="#">TaskIT</a>
+                    <a className="navbar-brand" href="#">Список заказов</a>
                     <div id="navbarNavDropdown" className="navbar-collapse collapse">
                         <ul className="navbar-nav mr-auto">
 
                         </ul>
+                        <ul className="navbar-nav mr-2">
+                            <li className="nav-item text-nowrap">
+                                <div className="btn btn-info" onClick={e => this.create_cake()}>Создать торт</div>
+                            </li>
+                        </ul>
                         <ul className="navbar-nav">
                             <li className="nav-item text-nowrap">
-                                <div className="btn btn-info" onClick={e => this.logout()}>Sign out</div>
+                                <div className="btn btn-info" onClick={e => this.logout()}>Выйти</div>
                             </li>
                         </ul>
                     </div>
@@ -81,21 +73,47 @@ export class Home extends React.Component<HomeProps, HomeState> {
 
                     <div className="container">
 
-                        <InputComponent onNewTodoCreated={title => this.onNewTodoHandle(title)}/>
-
                         <div id="items-container">
                             {this.state.items.map(todoItem => {
                                 return (
-                                    <div className="card" key={todoItem.id}>
-                                        <div className="d-flex p-2 bd-highlight justify-content-between">
-                                            <h5 className="mb-1">{todoItem.text}</h5>
-                                            <div className="task-date">{todoItem.date.toLocaleString()}</div>
-                                            <button className="btn btn-outline-secondary" type="button"
+                                    <div className="card mb-3" key={todoItem.id}>
+                                        <div className="card-header">
+                                            Заказ{todoItem.id}
+                                            <button className="btn btn-outline-secondary float-right" type="button"
                                                     onClick={() => {
                                                         this.onItemRemove(todoItem.id)
                                                     }}
                                             >Delete
                                             </button>
+                                            <div className="float-right mr-2">{todoItem.date}</div>
+                                        </div>
+                                        <div className="card-body">
+                                            <p className="card-text">
+                                                <table className="table table-striped">
+                                                    <tbody>
+                                                    <tr className="d-flex">
+                                                        <td className="col-2">Вес торта(в кг)</td>
+                                                        <td className="col-9">{todoItem.cake_size}</td>
+                                                    </tr>
+                                                    <tr className="d-flex">
+                                                        <td className="col-2">Ярусы</td>
+                                                        <td className="col-9">{todoItem.cake_tier}</td>
+                                                    </tr>
+                                                    <tr className="d-flex">
+                                                        <td className="col-2">Коржи</td>
+                                                        <td className="col-9">{todoItem.cake_filling}</td>
+                                                    </tr>
+                                                    <tr className="d-flex">
+                                                        <td className="col-2">Крем</td>
+                                                        <td className="col-9">{todoItem.cake_cream}</td>
+                                                    </tr>
+                                                    <tr className="d-flex">
+                                                        <td className="col-2">Декор</td>
+                                                        <td className="col-9">{todoItem.cake_decor}</td>
+                                                    </tr>
+                                                    </tbody>
+                                               </table>
+                                            </p>
                                         </div>
                                     </div>
                                 )

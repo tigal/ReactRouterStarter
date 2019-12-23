@@ -1,28 +1,44 @@
 {
   "todo": [
     {
-      "author": "user",
-      "text": "User1",
-      "date": "2019-11-20 11:08:38",
-      "id": 9
-    },
-    {
-      "author": "user",
-      "text": "User2",
-      "date": "2019-11-20 11:08:41",
-      "id": 10
+      "author": "admin",
+      "cake_size": 5,
+      "cake_tier": 1,
+      "cake_filling": "Ванильный",
+      "cake_cream": "Шоколадный",
+      "cake_decor": "Ягоды, Акварельный рисунок",
+      "date": "2019-12-23 09:19:00",
+      "id": 1
     },
     {
       "author": "admin",
-      "text": "Admin1",
-      "date": "2019-11-20 13:09:57",
-      "id": 11
+      "cake_size": 15,
+      "cake_tier": 5,
+      "cake_filling": "Ирландский",
+      "cake_cream": "Сливочно-сырный",
+      "cake_decor": "Леденцы, Живые цветы",
+      "date": "2019-12-23 09:19:27",
+      "id": 2
     },
     {
-      "author": "admin",
-      "text": "Admin2",
-      "date": "2019-11-20 13:09:59",
-      "id": 12
+      "author": "user",
+      "cake_size": 6,
+      "cake_tier": 2,
+      "cake_filling": "Морковный",
+      "cake_cream": "Сливочно-сырный",
+      "cake_decor": "Ягоды",
+      "date": "2019-12-23 09:20:20",
+      "id": 3
+    },
+    {
+      "author": "user",
+      "cake_size": 10,
+      "cake_tier": 3,
+      "cake_filling": "Шоколадный",
+      "cake_cream": "Ванильный",
+      "cake_decor": "Ягоды, Акварельный рисунок, Игрушка из мастики, Леденцы, Живые цветы",
+      "date": "2019-12-23 09:20:45",
+      "id": 4
     }
   ],
   "user": [

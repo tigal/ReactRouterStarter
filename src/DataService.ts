@@ -3,20 +3,36 @@ export interface User {
     password: string;
 }
 
-export class TodoItem {
+
+export class CakeItem {
 
     id: number;
 
     author: string;
 
-    text: string;
+    cake_size: number;
+
+    cake_tier: number;
+
+    cake_filling: string;
+
+    cake_cream: string;
+
+    cake_decor: string;
 
     date: Date;
 
-    constructor(id: number, author: string, text: string, date: Date) {
+    constructor(id: number, author: string, cake_size: number,
+                cake_tier:number,
+                cake_filling: string, cake_cream: string,
+                cake_decor: string, date: Date) {
         this.id = id;
         this.author = author;
-        this.text = text;
+        this.cake_size = cake_size;
+        this.cake_tier = cake_tier;
+        this.cake_filling = cake_filling;
+        this.cake_cream = cake_cream;
+        this.cake_decor = cake_decor;
         this.date = date;
     }
 
@@ -75,7 +91,7 @@ class DataService {
     /**
      * Получить все TodoItem'ы пользователя
      */
-    public async getTodoItems(): Promise<TodoItem[]> {
+    public async getTodoItems(): Promise<CakeItem[]> {
         if (this.currentUser == null) {
             return Promise.reject("User is not authorized");
         }
@@ -84,7 +100,7 @@ class DataService {
 
         let response: Response = await todoResponsePromise;
 
-        let jsonPromise: Promise<TodoItem[]> = (response).json();
+        let jsonPromise: Promise<CakeItem[]> = (response).json();
 
         return await jsonPromise;
     }
@@ -93,7 +109,7 @@ class DataService {
      * Добавить новый TodoItem на сервер
      * @param newItem новый TodoItem
      */
-    public async saveItem(newItem: TodoItem): Promise<TodoItem> {
+    public async saveItem(newItem: CakeItem): Promise<CakeItem> {
         if (this.currentUser == null) {
             return Promise.reject("User is not authorized");
         }

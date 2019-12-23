@@ -3,11 +3,16 @@ import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom
 import LoginPage from "./LoginPage";
 import dataService from "./DataService";
 import Home from "./HomeComponent";
+import CreateCake from "./CreateCake";
 
 const routes = [
     {
         path: "/login",
         component: LoginPage
+    },
+    {
+        path: "/createcake",
+        component: CreateCake
     },
     {
         path: "/home",
